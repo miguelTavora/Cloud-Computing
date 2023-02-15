@@ -1,0 +1,52 @@
+
+syntax = "proto3";
+
+// each class is defined in each own file, inside a common package
+option java_multiple_files = true;
+option java_package = "contractservice";
+
+package contractservice; // package do proto
+
+service ContractService {
+  rpc sendFileBlocks(stream Content) returns(Identifier);
+  rpc getCharacteristics(Identifier) returns(PortugueseLabels);
+  rpc getFilesWithCharacteristics(Characteristics) returns(stream Identifier);
+  rpc getContentStored(Name) returns (stream Content);
+  rpc getAllFilesFromStorage(Void) returns (stream Name);
+  rpc getAllLabelNames(Void) returns (PortugueseLabels);
+  rpc checkServerConnection(Void) returns(Void);
+}
+
+message Content {
+  bytes fileBlockBytes = 1; // bytes type is an array of bytes
+  string filename = 2;
+  string contentType = 3;
+
+}
+
+message Identifier {
+  string identification = 1;
+
+}
+
+message PortugueseLabels {
+  repeated string labels = 1;
+  repeated string translations = 2;
+
+}
+
+message Characteristics {
+  string firstDate = 1;
+  string secondDate = 2;
+  string characteristicsInformation = 3;
+
+}
+
+message Void {
+
+}
+
+message Name {
+  string bucketName = 2;
+  string filename = 3;
+}
